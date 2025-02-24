@@ -1,0 +1,25 @@
+# Configuration file for ONNX quantization parameters
+
+model:
+  input: "models/original_model.onnx"
+  output: "models/quantized_model.onnx"
+
+quantization:
+  precision: "int8"      # Options: "int8", "fp16"
+  method: "static"       # Options: "static", "dynamic"
+  calibrate_method: "MinMax"
+  quant_format: "QOperator"
+  activation_type: "QUInt8"
+  weight_type: "QInt8"
+  per_channel: true
+  reduce_range: false
+
+calibration:
+  data_dir: "data/calibration_images"
+  batch_size: 32
+  target_size: [224, 224]
+  num_samples: 100
+
+providers:
+  - "CUDAExecutionProvider"
+  - "CPUExecutionProvider"
